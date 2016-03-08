@@ -6,3 +6,5 @@ lib
 es
 coverage
 _book
+**/node_modules
+**/.idea

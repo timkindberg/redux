@@ -1,32 +1,13 @@
 import shop from '../api/shop'
 import * as types from '../constants/ActionTypes'
 
-function receiveProducts(products) {
-  return {
-    type: types.RECEIVE_PRODUCTS,
-    products: products
-  }
-}
-
-export function getAllProducts() {
-  return dispatch => {
-    shop.getProducts(products => {
-      dispatch(receiveProducts(products))
-    })
-  }
-}
-
-function addToCartUnsafe(productId) {
-  return {
-    type: types.ADD_TO_CART,
-    productId
-  }
-}
-
 export function addToCart(productId) {
   return (dispatch, getState) => {
     if (getState().products.byId[productId].inventory > 0) {
-      dispatch(addToCartUnsafe(productId))
+      dispatch({
+        type: types.ADD_TO_CART,
+        productId
+      })
     }
   }
 }

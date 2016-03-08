@@ -1,7 +1,17 @@
 import React, { Component, PropTypes } from 'react'
 import Product from './Product'
+import { connect } from 'react-redux'
+import { checkout } from '../actions'
+import { getTotal, getCartProducts } from '../reducers'
 
-export default class Cart extends Component {
+export class Cart extends Component {
+
+  static propTypes = {
+    products: PropTypes.array,
+    total: PropTypes.string,
+    onCheckoutClicked: PropTypes.func
+  }
+
   render() {
     const { products, total, onCheckoutClicked } = this.props
 
@@ -30,8 +40,14 @@ export default class Cart extends Component {
   }
 }
 
-Cart.propTypes = {
-  products: PropTypes.array,
-  total: PropTypes.string,
-  onCheckoutClicked: PropTypes.func
+const mapStateToProps = (state) => {
+  return {
+    products: getCartProducts(state),
+    total: getTotal(state)
+  }
 }
+
+export default connect(
+  mapStateToProps,
+  { onCheckoutClicked: checkout }
+)(Cart)
