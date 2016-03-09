@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react'
-import Product from './Product'
 import { connect } from 'react-redux'
-import { checkout } from '../actions'
-import { getTotal, getCartProducts } from '../reducers'
+
+//import Product from './Product'
+import { cartCheckout } from '../actions'
+import { getTotal, getQuantity } from '../reducers'
 
 export class Cart extends Component {
 
   static propTypes = {
     products: PropTypes.array,
-    total: PropTypes.string,
+    total: PropTypes.number,
     onCheckoutClicked: PropTypes.func
   }
 
@@ -16,15 +17,14 @@ export class Cart extends Component {
     const { products, total, onCheckoutClicked } = this.props
 
     const hasProducts = products.length > 0
-    const nodes = !hasProducts ?
-      <em>Please add some products to cart.</em> :
-      products.map(product =>
-        <Product
-          title={product.title}
-          price={product.price}
-          quantity={product.quantity}
-          key={product.id}/>
-    )
+    const nodes = !hasProducts
+      ? <em>Please add some products to cart.</em>
+      : products.map((product, i) => <div key={i}>{product}</div>)
+        //<Product
+        //  title={product.title}
+        //  price={product.price}
+        //  quantity={product.quantity}
+        //  key={product.id}/>
 
     return (
       <div>
@@ -42,12 +42,12 @@ export class Cart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: getCartProducts(state),
+    products: state.products,
     total: getTotal(state)
   }
 }
 
 export default connect(
   mapStateToProps,
-  { onCheckoutClicked: checkout }
+  { onCheckoutClicked: cartCheckout }
 )(Cart)

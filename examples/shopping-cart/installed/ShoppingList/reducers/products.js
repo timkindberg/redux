@@ -43,12 +43,12 @@ function visibleIds(state = [], action) {
 }
 
 export default combineReducers({
-  byId,
+  byUpc,
   visibleIds
 })
 
 export function getProduct(state, id) {
-  return state.byId[id]
+  return state.byUpc[id]
 }
 
 export function getVisibleProducts(state) {

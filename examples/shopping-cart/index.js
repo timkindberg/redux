@@ -5,35 +5,26 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
+import App from './src/components/App'
 
-import reducer from './reducers'
-import { getAllProducts } from './actions'
-import ProductsList from '../components/ProductsList'
-import { components as cartComponents } from './installed/Cart'
-
-const { Cart } from cartComponents;
+import cart from './installed/Cart/reducers'
+//import { getAllProducts } from './redux'
+//import ProductsList from '../components/ProductsList'
 
 const middleware = process.env.NODE_ENV === 'production' ?
   [ thunk ] :
-  [ thunk, logger() ]
+  [ thunk, logger()/*, window.devToolsExtension ? window.devToolsExtension() : f => f*/ ]
 
 const store = createStore(
-  reducer,
-  applyMiddleware(...middleware),
-  window.devToolsExtension ? window.devToolsExtension() : f => f
+  cart,
+  applyMiddleware(...middleware)
 )
 
-store.dispatch(getAllProducts())
+//store.dispatch(getAllProducts())
 
 render(
   <Provider store={store}>
-    <div>
-      <h2>ClickList</h2>
-      <hr/>
-      <ProductsList />
-      <hr/>
-      <Cart />
-    </div>
+    <App />
   </Provider>,
   document.getElementById('root')
 )

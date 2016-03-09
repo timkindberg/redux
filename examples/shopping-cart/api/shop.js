@@ -6,11 +6,24 @@ import _products from './products.json'
 const TIMEOUT = 100
 
 export default {
-  getProducts(cb, timeout) {
-    setTimeout(() => cb(_products), timeout || TIMEOUT)
+  getProducts() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(_products), TIMEOUT)
+    })
   },
 
-  buyProducts(payload, cb, timeout) {
-    setTimeout(() => cb(), timeout || TIMEOUT)
+  addProduct(product) {
+    return new Promise((resolve, reject) => {
+      setTimeout(product.upc && !product.fail
+          ? resolve
+          : reject.bind(null, 'Product is missing upc'),
+      TIMEOUT)
+    })
+  },
+
+  buyProducts() {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, TIMEOUT)
+    })
   }
 }
