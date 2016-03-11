@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import { default as cart } from '../installed/Cart/reducers'
-//import { default as products, getProduct } from './products/reducers/products'
+import { default as cart } from '../installed/SideCart/reducers'
+import { default as products } from '../installed/ShoppingGrid/reducers'
 
-//export function getTotal(state) {
+//export function getTotalQuantity(state) {
 //  return getAddedIds(state.cart).reduce((total, id) =>
 //    total + getProduct(state.products, id).price * getQuantity(state.cart, id),
 //    0
@@ -21,5 +21,5 @@ import { default as cart } from '../installed/Cart/reducers'
 
 export default combineReducers({
   cart,
-  //products
+  products
 })

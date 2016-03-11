@@ -3,7 +3,7 @@
  */
 import _products from './products.json'
 
-const TIMEOUT = 100
+const TIMEOUT = 300
 
 export default {
   getProducts() {
@@ -14,6 +14,7 @@ export default {
 
   addProduct(product) {
     return new Promise((resolve, reject) => {
+      console.log(`shop::addProduct::17    product:`, product)
       setTimeout(product.upc && !product.fail
           ? resolve
           : reject.bind(null, 'Product is missing upc'),

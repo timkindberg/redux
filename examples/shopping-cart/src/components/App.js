@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import Cart from '../../installed/Cart/components/Cart'
-import { cartAdd } from '../../installed/Cart/actions'
+import Cart from '../../installed/SideCart/components/Cart'
+import { cartAdd } from '../../installed/SideCart/actions'
+
+import ProductsList from '../../installed/ShoppingGrid/components/ProductsList'
 
 export class App extends Component {
   static propTypes = {
@@ -30,6 +32,9 @@ export class App extends Component {
         <button onClick={() => {
           dispatch(cartAdd({ upc: this.input2.value, fail: true }))
         }}>Add Item</button>
+
+        <hr/>
+        <ProductsList />
       </div>
     )
   }

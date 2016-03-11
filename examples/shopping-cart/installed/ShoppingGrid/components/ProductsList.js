@@ -1,14 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addToCart } from '../actions'
-import { getVisibleProducts } from '../reducers/products'
+import { getProducts } from '../reducers'
 import ProductItem from './ProductItem'
+
+// todo: remove bad coupling
+import { cartAdd } from '../../../installed/SideCart/actions'
 
 export class ProductsList extends Component {
 
   static propTypes = {
     products: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      upc: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       inventory: PropTypes.number.isRequired
@@ -21,24 +23,22 @@ export class ProductsList extends Component {
     return (
       <div>
         <h3>Products</h3>
-        {products.map(product =>
+        {products.map((product, i)=>
           <ProductItem
-            key={product.id}
+            key={i}
             product={product}
-            onAddToCartClicked={() => this.props.addToCart(product.id)} />
+            onAddToCartClicked={() => this.props.addToCart(product)} />
         )}
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    products: getVisibleProducts(state.products)
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  { addToCart }
+  (state) => ({
+    products: getProducts(state.products)
+  }),
+  {
+    addToCart: cartAdd
+  }
 )(ProductsList)

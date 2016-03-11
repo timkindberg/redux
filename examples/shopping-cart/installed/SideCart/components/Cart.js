@@ -1,14 +1,19 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-//import Product from './Product'
+import Product from '../../ShoppingGrid/components/Product'
 import { cartCheckout } from '../actions'
-import { getTotal, getQuantity } from '../reducers'
+import { getTotalPrice, getCartProducts } from '../reducers'
 
 export class Cart extends Component {
 
   static propTypes = {
-    products: PropTypes.array,
+    products: PropTypes.arrayOf(PropTypes.shape({
+      upc: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      inventory: PropTypes.number.isRequired
+    })).isRequired,
     total: PropTypes.number,
     onCheckoutClicked: PropTypes.func
   }
@@ -19,12 +24,13 @@ export class Cart extends Component {
     const hasProducts = products.length > 0
     const nodes = !hasProducts
       ? <em>Please add some products to cart.</em>
-      : products.map((product, i) => <div key={i}>{product}</div>)
-        //<Product
-        //  title={product.title}
-        //  price={product.price}
-        //  quantity={product.quantity}
-        //  key={product.id}/>
+      : products.map((product, i) =>
+          <Product
+            title={product.title}
+            price={product.price}
+            quantity={product.quantity}
+            key={i}/>
+        )
 
     return (
       <div>
@@ -40,14 +46,10 @@ export class Cart extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    products: state.products,
-    total: getTotal(state)
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  { onCheckoutClicked: cartCheckout }
+    (state) => ({
+      products: getCartProducts(state),
+      total: getTotalPrice(state)
+    }),
+    { onCheckoutClicked: cartCheckout }
 )(Cart)

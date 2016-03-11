@@ -7,8 +7,8 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 import App from './src/components/App'
 
-import cart from './installed/Cart/reducers'
-//import { getAllProducts } from './redux'
+import reducers from './src/reducers'
+import { getAllProducts } from './installed/ShoppingGrid/actions'
 //import ProductsList from '../components/ProductsList'
 
 const middleware = process.env.NODE_ENV === 'production' ?
@@ -16,11 +16,11 @@ const middleware = process.env.NODE_ENV === 'production' ?
   [ thunk, logger()/*, window.devToolsExtension ? window.devToolsExtension() : f => f*/ ]
 
 const store = createStore(
-  cart,
+  reducers,
   applyMiddleware(...middleware)
 )
 
-//store.dispatch(getAllProducts())
+store.dispatch(getAllProducts())
 
 render(
   <Provider store={store}>
