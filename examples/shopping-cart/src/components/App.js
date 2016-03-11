@@ -20,21 +20,33 @@ export class App extends Component {
         <Cart />
 
         <hr/>
-        Will Succeed
+        <ProductsList />
+
+        <hr/>
+        Will Succeed&nbsp;
         <input type="text" ref={node => this.input1 = node}/>
         <button onClick={() => {
-          dispatch(cartAdd({ upc: this.input1.value }))
+          dispatch(cartAdd({
+            upc: Math.floor(Math.random() * 100),
+            title: this.input1.value,
+            price: 1,
+            inventory: 10
+          }))
         }}>Add Item</button>
 
-        <hr/>
-        Will Fail
+        <br/>Will Fail&nbsp;
         <input type="text" ref={node => this.input2 = node}/>
         <button onClick={() => {
-          dispatch(cartAdd({ upc: this.input2.value, fail: true }))
+          dispatch(cartAdd({
+            upc: Math.floor(Math.random() * 100),
+            title: this.input2.value,
+            price: 1,
+            inventory: 10,
+            fail: true
+          }))
         }}>Add Item</button>
 
         <hr/>
-        <ProductsList />
       </div>
     )
   }
