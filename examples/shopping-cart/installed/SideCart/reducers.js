@@ -48,10 +48,14 @@ export default combineReducers({
   quantityByUpc
 })
 
+// todo: these next two helpers need to access both Cart reducer (.cart) and
+// Products reducer (.products). This isn't good. So these helpers can't logically exist in
+// either Cart or Products. I had thought to move them out or up to the parent.
 export function getCartProducts(state) {
   return getProducts(state.products).filter(p => state.cart.productUpcs.includes(p.upc))
 }
 
+// todo: ditto above helper
 export function getTotalPrice(state) {
   return getCartProducts(state).reduce(
       (total, p) =>
@@ -60,6 +64,7 @@ export function getTotalPrice(state) {
   )
 }
 
+// todo: these helpers are fine. Not coupled.
 export function getTotalQuantity(state) {
   return state.productUpcs.reduce(
     (total, p) =>

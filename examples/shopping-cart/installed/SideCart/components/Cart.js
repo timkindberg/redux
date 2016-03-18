@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
+// todo: coupled? using another teams component probably isn't so bad
 import Product from '../../ShoppingGrid/components/Product'
+
 import { cartCheckout } from '../actions'
 import { getTotalPrice, getCartProducts } from '../reducers'
 

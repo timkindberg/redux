@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { createReducer } from 'redux-act'
 import { getAllProducts } from './actions'
 
-// todo: remove bad coupling
+// todo: badly coupled to sidecart's action
 import { cartAdd } from '../../installed/SideCart/actions'
 
 const initialState = {
@@ -21,6 +21,7 @@ const productsByUpc = createReducer({
       , {...state}),
   [getAllProducts.error]: (state, err) => state,
 
+  // todo: coupled here
   [cartAdd.request]: (state, product) => {
     return {
       ...state,

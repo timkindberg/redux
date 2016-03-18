@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getProducts } from '../reducers'
 import ProductItem from './ProductItem'
 
-// todo: remove bad coupling
+// todo: coupled to sidecart action
 import { cartAdd } from '../../../installed/SideCart/actions'
 
 export class ProductsList extends Component {
